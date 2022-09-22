@@ -1,12 +1,13 @@
 package hello.springmvc12basic.basic.request;
 
+import hello.springmvc12basic.basic.HelloData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -104,7 +105,7 @@ public class RequestParamController {
     }
 
     /**
-     * 3.요청 Map으로 받기: @RequestParam Map, MultiValueMap
+     * 2-5.요청 Map으로 받기: @RequestParam Map, MultiValueMap
      * 키 당 값 하나: Map(key=value) :
      * 키 당 값 여러개: MultiValueMap(key=[value1, value2, ...]) ex) (key=userIds, value=[id1, id2])
      */
@@ -112,6 +113,19 @@ public class RequestParamController {
     @RequestMapping("/request-param-map")
     public String requestParamMap(@RequestParam Map<String, Object>paramMap){
         log.info("username={}, age={}", paramMap.get("username"), paramMap.get("age"));
+        return "ok";
+    }
+
+    /**
+     * 3.@ModelAttribute 사용
+     * : 요청받은 데이터로 클래스 객체 생성
+     * 참고: model.addAttribute(helloData) 코드도 함께 자동 적용됨, 뒤에 model을 설명할 때
+    자세히 설명
+     */
+    @ResponseBody
+    @RequestMapping("/model-attribute-v1")
+    public String modelAttrubuteV1(@ModelAttribute HelloData helloData){
+        log.info("username={}, age={}", helloData.getUsername(), helloData.getAge());
         return "ok";
     }
 
